@@ -7,9 +7,14 @@ define([
 
   var Store = Backbone.Collection.extend({
       model : show,
-      url : '//cloudservices.arcadiagroup.co.uk/storestock/storestock?brand=12556&dist=50&res=5&jsonp_callback=?&lat=51.511&long=-0.1198',
+        url: function() {
+        return this.urlRoot+'&lat=' + this.lat+"&long="+this.longs;
+        },
+        urlRoot : '//cloudservices.arcadiagroup.co.uk/storestock/storestock?brand=12556&dist=50&res=5&jsonp_callback=?',
       // Overwrite the sync method to pass over the Same Origin Policy
-      initialize : function () {
+      initialize : function (models, options) {
+        this.lat = options.lat;
+        this.longs = options.longs;
         console.log(this);
       },
 
@@ -26,7 +31,10 @@ define([
         return Backbone.sync(method, collection, options);
       },
       parse : function (response) {
-        //console.log(response.stores.store);
+        //##console.log(response.stores.store);
+        if(response.error) {
+            return response.error;
+        }
         return response.stores.store;
       },
     });

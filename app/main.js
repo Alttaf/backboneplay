@@ -33,9 +33,10 @@ require([
 ], function(AppView, Router, Vm) {
 
 	//Set up global configuration
-    window.config = {};
     
-    //config.webserviceURL = 'http://cloudservices.arcadiagroup.co.uk/storestock/storestock';
+
+    window.config = {};
+    config.webserviceURL = 'http://cloudservices.arcadiagroup.co.uk/storestock/storestock';
 
     var appView = Vm.create({}, 'AppView', AppView);
     appView.render();
